@@ -105,6 +105,37 @@
             true
         );
 
+
+        // Eruda tab shortcuts
+        const ERUDA_TABS = {
+            c: 'console',
+            e: 'elements',
+            n: 'network',
+            r: 'resources',
+            s: 'sources',
+            i: 'info'
+        };
+
+        document.addEventListener('keydown', function (e) {
+            if (!e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
+
+            // Avoid interfering with text input
+            if (
+                ['INPUT', 'TEXTAREA'].includes(e.target.tagName) ||
+                e.target.isContentEditable
+            ) return;
+
+            const key = e.key.toLowerCase();
+            const tab = ERUDA_TABS[key];
+
+            if (!tab) return;
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            eruda.get().showTool(tab);
+        }, true);
+
         console.log('================================');
         console.log('MY ERUDA INITIALIZED');
         console.log('+       : Increase height');
@@ -114,7 +145,9 @@
         console.log('Height  : 10% - 100%');
         console.log('Scale   : 20% - 300%');
         console.log('================================');
-    }
+    
+
+    } //end initializeMyEruda
 
     // Load Eruda
     if (window.eruda) {
